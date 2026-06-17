@@ -41,18 +41,30 @@ class DetailsActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
                     state.university?.let { university ->
-                        binding.tvUniversityName.text = university.name
-                        binding.tvCountry.text = university.country
-                        binding.tvAlphaCode.text = university.alphaTwoCode
+                        binding.tvHeroName.text = university.name
+                        binding.tvHeroCountry.text = university.country
+
+                        val locationText = buildString {
+                            if (university.stateProvince != null) {
+                                append("${university.stateProvince}, ")
+                            }
+                            append(university.alphaTwoCode)
+                        }
+                        binding.tvLocationValue.text = locationText
+
+                        binding.tvDomainValue.text = university.domains.firstOrNull() ?: ""
+
+                        binding.tvDescription.text =
+                            "A distinguished institution of higher education in ${university.country}, committed to academic excellence and research."
 
                         if (university.stateProvince != null) {
-                            binding.labelStateProvince.visibility = View.VISIBLE
-                            binding.tvStateProvince.visibility = View.VISIBLE
+                            binding.cardStateProvince.visibility = View.VISIBLE
                             binding.tvStateProvince.text = university.stateProvince
+                        } else {
+                            binding.cardStateProvince.visibility = View.GONE
                         }
 
                         binding.tvWebPages.text = university.webPages.joinToString("\n")
-                        binding.tvDomains.text = university.domains.joinToString("\n")
                     }
                 }
             }

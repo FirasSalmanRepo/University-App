@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.UniversityApp" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.UniversityApp" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/deep_navy</item>
+        <item name="android:navigationBarColor">@color/white</item>
+    </style>
 
-    <style name="Theme.UniversityApp.Details" parent="Theme.Material3.DayNight.NoActionBar" />
+    <style name="Theme.UniversityApp.Details" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/deep_navy</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/gold</item>
+        <item name="android:statusBarColor">@color/deep_navy</item>
+    </style>
 
 </resources>

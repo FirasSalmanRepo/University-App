@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="deep_navy">#002147</color>
+    <color name="deep_navy_light">#1A3A5C</color>
+    <color name="gold">#FFD700</color>
+    <color name="gold_dark">#E6C200</color>
+    <color name="background">#F7F9FB</color>
+    <color name="card_surface">#FFFFFF</color>
+    <color name="contact_card">#F2F4F6</color>
+    <color name="text_primary">#1A1A2E</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="text_on_navy">#FFFFFF</color>
+    <color name="divider">#E5E7EB</color>
+    <color name="hero_overlay_start">#00002147</color>
+    <color name="hero_overlay_end">#CC002147</color>
+</resources>
