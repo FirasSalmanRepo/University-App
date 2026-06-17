@@ -1,9 +1,7 @@
 package com.fsalman.universityapp.core.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
-@Parcelize
 data class University(
     val name: String,
     val country: String,
@@ -11,4 +9,4 @@ data class University(
     val alphaTwoCode: String,
     val webPages: List<String>,
     val domains: List<String>
-) : Parcelable
+) : Serializable
