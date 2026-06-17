@@ -6,8 +6,9 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.fsalman.universityapp.R
 
-val InterFamily = FontFamily.SansSerif
+val InterFamily = FontFamily(Font(R.font.inter))
 
 val Typography = Typography(
     headlineLarge = TextStyle(

@@ -12,10 +12,10 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/deep_navy"
-        app:titleTextColor="@color/text_on_navy"
+        android:background="@color/text_on_navy"
+        app:titleTextColor="@color/text_primary"
         app:title="@string/title_university_details"
-        app:navigationIconTint="@color/text_on_navy"
+        app:navigationIconTint="@color/text_primary"
         app:navigationIcon="?attr/homeAsUpIndicator" />
 
     <ScrollView
@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/label_top_ranked"
                         android:textSize="11sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/inter"
                         android:textColor="@color/deep_navy"
                         android:background="@color/gold"
                         android:paddingHorizontal="10dp"
@@ -72,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:textSize="22sp"
-                        android:fontFamily="sans-serif"
+                        android:fontFamily="@font/inter"
                         android:textStyle="bold"
                         android:textColor="@color/text_on_navy"
                         tools:text="University Name" />
@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:textSize="14sp"
-                        android:fontFamily="sans-serif"
+                        android:fontFamily="@font/inter"
                         android:textColor="#B0FFFFFF"
                         tools:text="United Arab Emirates" />
 
@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_about"
                     android:textSize="13sp"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/inter"
                     android:textColor="@color/text_secondary"
                     android:textAllCaps="true"
                     android:letterSpacing="0.05" />
@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:textSize="14sp"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/inter"
                     android:textColor="@color/text_primary"
                     android:lineSpacingExtra="4dp"
                     tools:text="A leading institution in the United Arab Emirates." />
@@ -156,7 +156,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/label_location"
                                 android:textSize="11sp"
-                                android:fontFamily="sans-serif-medium"
+                                android:fontFamily="@font/inter"
                                 android:textColor="@color/text_secondary"
                                 android:textAllCaps="true" />
 
@@ -166,7 +166,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:textSize="14sp"
-                                android:fontFamily="sans-serif-medium"
+                                android:fontFamily="@font/inter"
                                 android:textColor="@color/text_primary"
                                 tools:text="Abu Dhabi, AE" />
 
@@ -183,7 +183,7 @@
                     android:layout_marginTop="24dp"
                     android:text="@string/label_contact_info"
                     android:textSize="13sp"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/inter"
                     android:textColor="@color/text_secondary"
                     android:textAllCaps="true"
                     android:letterSpacing="0.05" />
@@ -224,7 +224,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/label_state_province"
                                 android:textSize="11sp"
-                                android:fontFamily="sans-serif-medium"
+                                android:fontFamily="@font/inter"
                                 android:textColor="@color/text_secondary" />
 
                             <TextView
@@ -233,7 +233,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:textSize="14sp"
-                                android:fontFamily="sans-serif-medium"
+                                android:fontFamily="@font/inter"
                                 android:textColor="@color/text_primary"
                                 tools:text="Dubai" />
 
@@ -271,7 +271,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/label_website"
                                 android:textSize="11sp"
-                                android:fontFamily="sans-serif-medium"
+                                android:fontFamily="@font/inter"
                                 android:textColor="#80FFFFFF"
                                 android:textAllCaps="true" />
 
@@ -281,7 +281,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:textSize="14sp"
-                                android:fontFamily="sans-serif-medium"
+                                android:fontFamily="@font/inter"
                                 android:textColor="@color/text_on_navy"
                                 android:autoLink="web"
                                 android:linksClickable="true"
@@ -301,20 +301,6 @@
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="24dp" />
-
-                <!-- Refresh Button -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnRefresh"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/btn_refresh"
-                    android:textColor="@color/deep_navy"
-                    app:backgroundTint="@color/gold"
-                    app:cornerRadius="8dp" />
 
             </LinearLayout>
 

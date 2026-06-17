@@ -28,9 +28,6 @@ class DetailsActivity : AppCompatActivity() {
 
         binding.toolbar.setNavigationOnClickListener { finish() }
 
-        binding.btnRefresh.setOnClickListener {
-            viewModel.handleIntent(DetailsIntent.Refresh)
-        }
 
         observeState()
         observeEffects()

@@ -24,23 +24,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -104,21 +99,9 @@ fun ListingScreen(
                         fontWeight = FontWeight.Bold
                     )
                 },
-                navigationIcon = {
-                    IconButton(onClick = { }) {
-                        Icon(Icons.Default.Menu, contentDescription = "Menu")
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { }) {
-                        Icon(Icons.Default.MoreVert, contentDescription = "More")
-                    }
-                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = CardSurface,
-                    titleContentColor = TextPrimary,
-                    navigationIconContentColor = TextPrimary,
-                    actionIconContentColor = TextPrimary
+                    titleContentColor = TextPrimary
                 )
             )
         },
@@ -223,12 +206,6 @@ private fun SearchBar(
                 modifier = Modifier.fillMaxWidth()
             )
         }
-        Spacer(modifier = Modifier.width(10.dp))
-        Text(
-            text = "\u2630",
-            fontSize = 18.sp,
-            color = TextSecondary
-        )
     }
 }
 
