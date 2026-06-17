@@ -343,7 +343,7 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <Spacer
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="24dp" />
 
