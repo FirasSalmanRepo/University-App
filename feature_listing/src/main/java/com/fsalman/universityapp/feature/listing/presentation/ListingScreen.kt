@@ -87,7 +87,7 @@ fun ListingScreen(
     var searchQuery by remember { mutableStateOf("") }
     var selectedFilter by remember { mutableStateOf("All Institutions") }
 
-    val filters = listOf("All Institutions", "Ivy League", "STEM-Focused")
+    val filters = listOf("All Institutions")
 
     val filteredUniversities = state.universities.filter { university ->
         searchQuery.isBlank() || university.name.contains(searchQuery, ignoreCase = true)
@@ -110,9 +110,6 @@ fun ListingScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { }) {
-                        Icon(Icons.Default.Search, contentDescription = "Search")
-                    }
                     IconButton(onClick = { }) {
                         Icon(Icons.Default.MoreVert, contentDescription = "More")
                     }

@@ -30,17 +30,22 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Hero Section -->
+            <!-- Hero Section with university background image -->
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:background="@color/deep_navy">
+                android:layout_height="200dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/hero_university"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@null" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/deep_navy_light"
-                    android:alpha="0.3" />
+                    android:background="#99002147" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -114,41 +119,41 @@
                     android:lineSpacingExtra="4dp"
                     tools:text="A leading institution in the United Arab Emirates." />
 
-                <!-- Info Row: Location & Domain -->
-                <LinearLayout
+                <!-- Location Card (full width) -->
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false">
+                    app:cardBackgroundColor="@color/card_surface"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/divider"
+                    app:strokeWidth="1dp">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="6dp"
-                        app:cardBackgroundColor="@color/card_surface"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="0dp"
-                        app:strokeColor="@color/divider"
-                        app:strokeWidth="1dp">
+                        android:orientation="horizontal"
+                        android:padding="14dp"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@android:drawable/ic_menu_mylocation"
+                            app:tint="@color/deep_navy"
+                            android:contentDescription="@null" />
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="14dp">
+                            android:layout_weight="1"
+                            android:layout_marginStart="12dp"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="\uD83D\uDCCD"
-                                android:textSize="20sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
                                 android:text="@string/label_location"
                                 android:textSize="11sp"
                                 android:fontFamily="sans-serif-medium"
@@ -167,56 +172,9 @@
 
                         </LinearLayout>
 
-                    </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="6dp"
-                        app:cardBackgroundColor="@color/card_surface"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="0dp"
-                        app:strokeColor="@color/divider"
-                        app:strokeWidth="1dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="14dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="\uD83C\uDF10"
-                                android:textSize="20sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:text="@string/label_domain"
-                                android:textSize="11sp"
-                                android:fontFamily="sans-serif-medium"
-                                android:textColor="@color/text_secondary"
-                                android:textAllCaps="true" />
-
-                            <TextView
-                                android:id="@+id/tvDomainValue"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:textSize="14sp"
-                                android:fontFamily="sans-serif-medium"
-                                android:textColor="@color/text_primary"
-                                tools:text="university.ac.ae" />
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <!-- Contact Section -->
                 <TextView
@@ -332,12 +290,13 @@
 
                         </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="\u2197\uFE0F"
-                            android:textSize="20sp"
-                            android:layout_marginStart="12dp" />
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginStart="12dp"
+                            android:src="@android:drawable/ic_menu_share"
+                            app:tint="@color/gold"
+                            android:contentDescription="@string/label_visit_website" />
 
                     </LinearLayout>
 

@@ -52,8 +52,6 @@ class DetailsActivity : AppCompatActivity() {
                         }
                         binding.tvLocationValue.text = locationText
 
-                        binding.tvDomainValue.text = university.domains.firstOrNull() ?: ""
-
                         binding.tvDescription.text =
                             "A distinguished institution of higher education in ${university.country}, committed to academic excellence and research."
 
