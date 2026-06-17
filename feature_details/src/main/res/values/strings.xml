@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_country">Country</string>
+    <string name="label_state_province">State / Province</string>
+    <string name="label_country_code">Country Code</string>
+    <string name="label_website">Website</string>
+    <string name="label_domains">Domains</string>
+    <string name="btn_refresh">Refresh</string>
+    <string name="title_university_details">University Details</string>
+</resources>
