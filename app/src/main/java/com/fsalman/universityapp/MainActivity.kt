@@ -16,7 +16,6 @@ import com.fsalman.universityapp.feature.listing.presentation.ListingEffect
 import com.fsalman.universityapp.feature.listing.presentation.ListingIntent
 import com.fsalman.universityapp.feature.listing.presentation.ListingScreen
 import com.fsalman.universityapp.feature.listing.presentation.ListingViewModel
-
 import dagger.hilt.android.AndroidEntryPoint
 import com.fsalman.universityapp.ui.theme.UniversityAppTheme
 import kotlinx.coroutines.launch

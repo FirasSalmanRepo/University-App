@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fsalman.universityapp.core.domain.usecase.GetUniversitiesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -43,7 +45,10 @@ class ListingViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
             try {
-                val result = getUniversitiesUseCase()
+                val dataDeferred = async { getUniversitiesUseCase() }
+                val timerDeferred = async { delay(MINIMUM_LOADING_MS) }
+                val result = dataDeferred.await()
+                timerDeferred.await()
                 _state.update {
                     it.copy(
                         universities = result.universities,
@@ -61,5 +66,9 @@ class ListingViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    companion object {
+        private const val MINIMUM_LOADING_MS = 4000L
     }
 }
