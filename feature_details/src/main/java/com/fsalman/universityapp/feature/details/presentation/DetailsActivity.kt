@@ -2,7 +2,6 @@ package com.fsalman.universityapp.feature.details.presentation
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -24,10 +23,10 @@ class DetailsActivity : AppCompatActivity() {
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            title = "University Details"
-        }
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        binding.toolbar.setNavigationOnClickListener { finish() }
 
         binding.btnRefresh.setOnClickListener {
             viewModel.handleIntent(DetailsIntent.Refresh)
@@ -72,16 +71,6 @@ class DetailsActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

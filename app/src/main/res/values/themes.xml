@@ -3,6 +3,6 @@
 
     <style name="Theme.UniversityApp" parent="android:Theme.Material.Light.NoActionBar" />
 
-    <style name="Theme.UniversityApp.Details" parent="Theme.Material3.DayNight" />
+    <style name="Theme.UniversityApp.Details" parent="Theme.Material3.DayNight.NoActionBar" />
 
 </resources>
