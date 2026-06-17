@@ -1,6 +1,7 @@
 package com.fsalman.universityapp.feature.listing.presentation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,19 +18,28 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -40,7 +50,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -49,13 +58,18 @@ import com.fsalman.universityapp.core.domain.model.University
 
 private val DeepNavy = Color(0xFF002147)
 private val Gold = Color(0xFFFFD700)
+private val GoldLight = Color(0xFFFFF8E1)
+private val GoldText = Color(0xFFB8860B)
 private val Background = Color(0xFFF7F9FB)
 private val CardSurface = Color(0xFFFFFFFF)
+private val TextPrimary = Color(0xFF1A1A2E)
 private val TextSecondary = Color(0xFF6B7280)
-private val TagBg = Color(0xFFEEF0F2)
-private val SearchBg = Color(0xFFFFFFFF)
+private val TagBorder = Color(0xFFD1D5DB)
+private val SearchBg = Color(0xFFF2F4F6)
 private val DividerColor = Color(0xFFE5E7EB)
+private val IconBg = Color(0xFFF2F4F6)
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListingScreen(
     viewModel: ListingViewModel,
@@ -65,7 +79,7 @@ fun ListingScreen(
     var searchQuery by remember { mutableStateOf("") }
     var selectedFilter by remember { mutableStateOf("All Institutions") }
 
-    val filters = listOf("All Institutions", "Public", "Private", "Research")
+    val filters = listOf("All Institutions", "Ivy League", "STEM-Focused")
 
     val filteredUniversities = state.universities.filter { university ->
         searchQuery.isBlank() || university.name.contains(searchQuery, ignoreCase = true)
@@ -73,8 +87,35 @@ fun ListingScreen(
 
     Scaffold(
         containerColor = Background,
-        bottomBar = {
-            BottomDirectoryBar()
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Academic Directory",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = { }) {
+                        Icon(Icons.Default.Menu, contentDescription = "Menu")
+                    }
+                },
+                actions = {
+                    IconButton(onClick = { }) {
+                        Icon(Icons.Default.Search, contentDescription = "Search")
+                    }
+                    IconButton(onClick = { }) {
+                        Icon(Icons.Default.MoreVert, contentDescription = "More")
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = CardSurface,
+                    titleContentColor = TextPrimary,
+                    navigationIconContentColor = TextPrimary,
+                    actionIconContentColor = TextPrimary
+                )
+            )
         },
         modifier = modifier
     ) { paddingValues ->
@@ -83,19 +124,22 @@ fun ListingScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            HeaderSection()
             SearchBar(
                 query = searchQuery,
                 onQueryChange = { searchQuery = it },
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
             )
-            Spacer(modifier = Modifier.height(12.dp))
             FilterChipsRow(
                 filters = filters,
                 selected = selectedFilter,
                 onFilterSelected = { selectedFilter = it }
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(4.dp))
+
+            if (state.isFromCache && state.universities.isNotEmpty()) {
+                CacheBanner(modifier = Modifier.padding(horizontal = 16.dp))
+                Spacer(modifier = Modifier.height(8.dp))
+            }
 
             Box(modifier = Modifier.weight(1f)) {
                 when {
@@ -137,57 +181,49 @@ fun ListingScreen(
 }
 
 @Composable
-private fun HeaderSection() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(DeepNavy)
-            .padding(horizontal = 16.dp, vertical = 20.dp)
-    ) {
-        Text(
-            text = "UAE Universities",
-            style = MaterialTheme.typography.headlineMedium,
-            color = Color.White,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = "Academic Excellence Directory",
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.White.copy(alpha = 0.7f)
-        )
-    }
-}
-
-@Composable
 private fun SearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box(
+    Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = 16.dp)
             .clip(RoundedCornerShape(8.dp))
             .background(SearchBg)
-            .padding(horizontal = 16.dp, vertical = 14.dp)
+            .padding(horizontal = 14.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        if (query.isEmpty()) {
-            Text(
-                text = "Search UAE universities...",
-                style = MaterialTheme.typography.bodyMedium,
-                color = TextSecondary
+        Icon(
+            imageVector = Icons.Default.Search,
+            contentDescription = null,
+            tint = TextSecondary,
+            modifier = Modifier.size(20.dp)
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Box(modifier = Modifier.weight(1f)) {
+            if (query.isEmpty()) {
+                Text(
+                    text = "Search UAE universities...",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = TextSecondary
+                )
+            }
+            BasicTextField(
+                value = query,
+                onValueChange = onQueryChange,
+                textStyle = MaterialTheme.typography.bodyMedium.copy(
+                    color = TextPrimary
+                ),
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
             )
         }
-        BasicTextField(
-            value = query,
-            onValueChange = onQueryChange,
-            textStyle = MaterialTheme.typography.bodyMedium.copy(
-                color = DeepNavy
-            ),
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth()
+        Spacer(modifier = Modifier.width(10.dp))
+        Text(
+            text = "\u2630",
+            fontSize = 18.sp,
+            color = TextSecondary
         )
     }
 }
@@ -233,6 +269,27 @@ private fun FilterChipsRow(
 }
 
 @Composable
+private fun CacheBanner(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .background(GoldLight)
+            .padding(horizontal = 12.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(text = "\uD83D\uDCC1", fontSize = 14.sp)
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = "Showing cached data from local storage",
+            style = MaterialTheme.typography.bodySmall,
+            color = GoldText,
+            fontWeight = FontWeight.Medium
+        )
+    }
+}
+
+@Composable
 private fun UniversityList(
     universities: List<University>,
     onUniversityClick: (University) -> Unit,
@@ -262,7 +319,7 @@ private fun UniversityCard(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = CardSurface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
@@ -271,44 +328,60 @@ private fun UniversityCard(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(IconBg),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = "\uD83C\uDFDB", fontSize = 20.sp)
+                }
+                Text(
+                    text = "\u2606",
+                    fontSize = 22.sp,
+                    color = TextSecondary
+                )
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
             Text(
                 text = university.name,
                 style = MaterialTheme.typography.titleMedium,
-                color = DeepNavy,
+                color = TextPrimary,
                 fontWeight = FontWeight.Bold,
-                maxLines = Int.MAX_VALUE,
-                overflow = TextOverflow.Visible
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
             )
+
             Spacer(modifier = Modifier.height(6.dp))
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "\uD83D\uDCCD",
-                    fontSize = 13.sp
-                )
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(text = "\uD83D\uDCCD", fontSize = 13.sp)
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = buildString {
-                        append(university.country)
                         if (university.stateProvince != null) {
-                            append(" • ${university.stateProvince}")
+                            append("${university.stateProvince}, ")
                         }
+                        append(university.country.replace("United Arab Emirates", "UAE"))
                     },
                     style = MaterialTheme.typography.bodySmall,
                     color = TextSecondary
                 )
             }
-            if (university.domains.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(10.dp))
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    TagChip(text = "INSTITUTION")
-                    if (university.webPages.isNotEmpty()) {
-                        TagChip(text = "ACCREDITED")
-                    }
-                }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                TagChip(text = "PRIVATE")
+                TagChip(text = "RESEARCH")
             }
         }
     }
@@ -318,44 +391,21 @@ private fun UniversityCard(
 private fun TagChip(text: String) {
     Box(
         modifier = Modifier
-            .clip(RoundedCornerShape(4.dp))
-            .background(TagBg)
-            .padding(horizontal = 8.dp, vertical = 3.dp)
+            .border(
+                width = 1.dp,
+                color = TagBorder,
+                shape = RoundedCornerShape(4.dp)
+            )
+            .padding(horizontal = 8.dp, vertical = 4.dp)
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.labelSmall,
             color = TextSecondary,
             fontWeight = FontWeight.Medium,
-            fontSize = 10.sp
+            fontSize = 10.sp,
+            letterSpacing = 0.5.sp
         )
-    }
-}
-
-@Composable
-private fun BottomDirectoryBar() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.White)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Button(
-            onClick = { },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Gold,
-                contentColor = DeepNavy
-            ),
-            shape = RoundedCornerShape(8.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = "\uD83C\uDFDB  Directory",
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
     }
 }
 

@@ -43,11 +43,12 @@ class ListingViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
             try {
-                val universities = getUniversitiesUseCase()
+                val result = getUniversitiesUseCase()
                 _state.update {
                     it.copy(
-                        universities = universities,
+                        universities = result.universities,
                         isLoading = false,
+                        isFromCache = result.isFromCache,
                         error = null
                     )
                 }

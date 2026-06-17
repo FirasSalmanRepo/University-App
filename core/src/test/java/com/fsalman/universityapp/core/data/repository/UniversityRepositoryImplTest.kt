@@ -9,6 +9,7 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -43,8 +44,9 @@ class UniversityRepositoryImplTest {
 
         val result = repository.getUniversities()
 
-        assertEquals(1, result.size)
-        assertEquals("Test University", result[0].name)
+        assertEquals(1, result.universities.size)
+        assertEquals("Test University", result.universities[0].name)
+        assertFalse(result.isFromCache)
         coVerify { dao.replaceAll(any()) }
     }
 
@@ -65,8 +67,9 @@ class UniversityRepositoryImplTest {
 
         val result = repository.getUniversities()
 
-        assertEquals(1, result.size)
-        assertEquals("Cached University", result[0].name)
+        assertEquals(1, result.universities.size)
+        assertEquals("Cached University", result.universities[0].name)
+        assertTrue(result.isFromCache)
     }
 
     @Test

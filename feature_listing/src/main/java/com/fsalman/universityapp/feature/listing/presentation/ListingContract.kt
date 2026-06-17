@@ -5,6 +5,7 @@ import com.fsalman.universityapp.core.domain.model.University
 data class ListingState(
     val universities: List<University> = emptyList(),
     val isLoading: Boolean = false,
+    val isFromCache: Boolean = false,
     val error: String? = null
 )
 

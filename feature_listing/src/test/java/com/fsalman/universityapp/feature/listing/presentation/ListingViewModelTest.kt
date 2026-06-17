@@ -1,6 +1,7 @@
 package com.fsalman.universityapp.feature.listing.presentation
 
 import com.fsalman.universityapp.core.domain.model.University
+import com.fsalman.universityapp.core.domain.model.UniversityResult
 import com.fsalman.universityapp.core.domain.usecase.GetUniversitiesUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -57,7 +58,7 @@ class ListingViewModelTest {
 
     @Test
     fun `initial state loads universities successfully`() = runTest(testDispatcher) {
-        coEvery { getUniversitiesUseCase() } returns sampleUniversities
+        coEvery { getUniversitiesUseCase() } returns UniversityResult(sampleUniversities, false)
 
         val viewModel = ListingViewModel(getUniversitiesUseCase)
         advanceUntilIdle()
@@ -65,6 +66,7 @@ class ListingViewModelTest {
         val state = viewModel.state.value
         assertEquals(sampleUniversities, state.universities)
         assertFalse(state.isLoading)
+        assertFalse(state.isFromCache)
         assertNull(state.error)
     }
 
@@ -83,12 +85,12 @@ class ListingViewModelTest {
 
     @Test
     fun `LoadUniversities intent refreshes data`() = runTest(testDispatcher) {
-        coEvery { getUniversitiesUseCase() } returns sampleUniversities
+        coEvery { getUniversitiesUseCase() } returns UniversityResult(sampleUniversities, false)
 
         val viewModel = ListingViewModel(getUniversitiesUseCase)
         advanceUntilIdle()
 
-        coEvery { getUniversitiesUseCase() } returns sampleUniversities.take(1)
+        coEvery { getUniversitiesUseCase() } returns UniversityResult(sampleUniversities.take(1), false)
         viewModel.handleIntent(ListingIntent.LoadUniversities)
         advanceUntilIdle()
 
@@ -97,8 +99,20 @@ class ListingViewModelTest {
     }
 
     @Test
+    fun `cached data sets isFromCache flag`() = runTest(testDispatcher) {
+        coEvery { getUniversitiesUseCase() } returns UniversityResult(sampleUniversities, true)
+
+        val viewModel = ListingViewModel(getUniversitiesUseCase)
+        advanceUntilIdle()
+
+        val state = viewModel.state.value
+        assertTrue(state.isFromCache)
+        assertEquals(sampleUniversities, state.universities)
+    }
+
+    @Test
     fun `SelectUniversity intent emits navigation effect`() = runTest(testDispatcher) {
-        coEvery { getUniversitiesUseCase() } returns sampleUniversities
+        coEvery { getUniversitiesUseCase() } returns UniversityResult(sampleUniversities, false)
 
         val viewModel = ListingViewModel(getUniversitiesUseCase)
         advanceUntilIdle()

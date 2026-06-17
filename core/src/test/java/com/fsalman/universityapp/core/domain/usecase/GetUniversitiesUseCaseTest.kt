@@ -1,6 +1,7 @@
 package com.fsalman.universityapp.core.domain.usecase
 
 import com.fsalman.universityapp.core.domain.model.University
+import com.fsalman.universityapp.core.domain.model.UniversityResult
 import com.fsalman.universityapp.core.domain.repository.UniversityRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -33,11 +34,13 @@ class GetUniversitiesUseCaseTest {
                 domains = listOf("test.ac.ae")
             )
         )
-        coEvery { repository.getUniversities() } returns universities
+        val universityResult = UniversityResult(universities, isFromCache = false)
+        coEvery { repository.getUniversities() } returns universityResult
 
         val result = useCase()
 
-        assertEquals(universities, result)
+        assertEquals(universities, result.universities)
+        assertEquals(false, result.isFromCache)
         coVerify(exactly = 1) { repository.getUniversities() }
     }
 
